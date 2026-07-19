@@ -4,25 +4,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mell's Recipe Book</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Lora:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
+    <div class="page">
         <!-- Header -->
         <header class="header">
-            <div class="header-content">
-                <h1 class="title">📖 Mell's Recipe Book</h1>
-                <nav class="nav-tabs">
-                    <button class="nav-btn active" data-tab="recipes">Recetas</button>
-                    <button class="nav-btn" data-tab="shopping">Lista de Compras</button>
-                </nav>
+            <div class="header-inner">
+                <h1 class="main-title">Mell's Recipe Book</h1>
+                <p class="subtitle">📖 Tus recetas favoritas compiladas</p>
+                <div class="header-meta">
+                    <span>Colección de bowls saludables • Menú flexible • Listas de compras</span>
+                </div>
             </div>
         </header>
+
+        <!-- Navigation Tabs -->
+        <nav class="nav-tabs">
+            <button class="nav-btn active" data-tab="recipes">🥘 Recetas</button>
+            <button class="nav-btn" data-tab="shopping">🛒 Lista de Compras</button>
+        </nav>
 
         <!-- Main Content -->
         <main class="main-content">
             <!-- Recipes Tab -->
             <section id="recipes-tab" class="tab-content active">
+                <div class="section-header">
+                    <h2>Nuestras Recetas</h2>
+                    <p class="section-description">Selecciona una receta para ver detalles completos, ingredientes y pasos de preparación.</p>
+                </div>
                 <div class="recipes-grid">
                     <!-- Las recetas se generarán aquí -->
                 </div>
@@ -30,20 +43,28 @@
 
             <!-- Shopping List Tab -->
             <section id="shopping-tab" class="tab-content">
+                <div class="section-header">
+                    <h2>Lista de Compras Inteligente</h2>
+                    <p class="section-description">Filtra por categoría de receta y genera tu lista personalizada de ingredientes.</p>
+                </div>
+
                 <div class="shopping-container">
                     <!-- Filtros -->
-                    <div class="filters-section">
-                        <h2>Filtrar por categoría</h2>
+                    <aside class="filters-section">
+                        <h3>Filtrar por Categoría</h3>
                         <div class="category-filters">
                             <!-- Se generarán dinámicamente -->
                         </div>
-                    </div>
+                    </aside>
 
                     <!-- Tabla de ingredientes -->
                     <div class="shopping-list-section">
                         <div class="shopping-header">
-                            <h2>Ingredientes a Comprar</h2>
-                            <button class="btn-clear-all" id="clear-all-btn">Limpiar lista</button>
+                            <div>
+                                <h3>Ingredientes a Comprar</h3>
+                                <p class="shopping-subtext" id="shopping-count">Selecciona una categoría para ver ingredientes</p>
+                            </div>
+                            <button class="btn-clear-all" id="clear-all-btn">↻ Limpiar lista</button>
                         </div>
                         <div class="shopping-list">
                             <!-- Se generará dinámicamente -->
@@ -52,12 +73,17 @@
                 </div>
             </section>
         </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Mell's Recipe Book © 2024 — Diseñado con <span class="heart">♡</span> para comer bien</p>
+        </footer>
     </div>
 
     <!-- Modal para ver detalles de la receta -->
     <div id="recipe-modal" class="modal">
         <div class="modal-content">
-            <span class="close">&times;</span>
+            <button class="close" aria-label="Cerrar">&times;</button>
             <div class="modal-body">
                 <!-- Se llenará dinámicamente -->
             </div>
