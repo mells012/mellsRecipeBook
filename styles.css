@@ -7,21 +7,33 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
-    --paper:      #f1ebd9;
-    --paper-soft: #ece5cf;
-    --chip:       #e2dabf;
-    --ink:        #2b2416;
+    /* Paleta del recetario */
+    --paper:      #EEEADA;
+    --paper-soft: #E6E0CB;
+    --chip:       #D0CAB2;
+    --ink:        #272216;
     --ink-soft:   #5c5240;
-    --olive:      #67713f;
-    --olive-deep: #4d5530;
-    --amber:      #b97f27;
-    --slate:      #6b8c96;
-    --line:       #d9d1b8;
-    --line-soft:  #e4ddc8;
+    --olive:      #6A6E4B;
+    --olive-deep: #4d5132;
+    --sage:       #6D8D5C;
+    --lime:       #AECF60;
+    --amber:      #AB813B;
+    --slate:      #758B95;
+    --blue:       #6695E6;
+    --indigo:     #3633AF;
+    --caramel:    #D7A36A;
+    --tomato:     #D25067;
+    --rose:       #D8ABA3;
+    --mauve:      #A86B8B;
+    --cheese:     #E8E16B;
+    --cream-ch:   #E5D2A2;
+    --line:       #d5cdb4;
+    --line-soft:  #e0d9c2;
 
     --serif: 'Fraunces', Georgia, serif;
     --body:  'Lora', Georgia, serif;
     --mono:  'JetBrains Mono', 'Courier New', monospace;
+    --hand:  'Caveat', 'Segoe Script', cursive;
 }
 
 ::selection { background: var(--olive); color: var(--paper); }
@@ -85,6 +97,65 @@ b, strong { font-weight: 600; }
 .hero-meta b {
     color: var(--olive-deep);
     font-weight: 700;
+}
+
+.hero-nutrients {
+    margin-top: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.hn-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.hn-label {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.28em;
+    color: var(--slate);
+    margin-right: 0.4rem;
+}
+
+.hn-falta { color: var(--tomato); }
+
+.hn-none {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--ink-soft);
+}
+
+/* ============ CHIPS DE NUTRIENTES ============ */
+
+.nutri-chip {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    padding: 0.24rem 0.65rem;
+    border-radius: 999px;
+    white-space: nowrap;
+}
+
+.nutri-chip.small {
+    font-size: 0.62rem;
+    padding: 0.16rem 0.5rem;
+}
+
+.nutri-chip.miss {
+    background: transparent;
+    border: 1.5px dashed var(--tomato);
+    color: var(--tomato);
+    font-size: 0.62rem;
+    padding: 0.14rem 0.5rem;
 }
 
 .rule {
@@ -156,6 +227,18 @@ b, strong { font-weight: 600; }
     margin-bottom: 1.75rem;
 }
 
+.section-title::after {
+    content: "";
+    display: block;
+    width: 84px;
+    height: 5px;
+    border-radius: 3px;
+    margin-top: 0.5rem;
+    background: linear-gradient(90deg,
+        var(--tomato), var(--caramel), var(--cheese),
+        var(--lime), var(--blue), var(--mauve));
+}
+
 /* ============ RECIPE CARDS ============ */
 
 .recipes-grid {
@@ -167,8 +250,9 @@ b, strong { font-weight: 600; }
 .recipe-card {
     background: var(--paper-soft);
     border: 1.5px solid var(--line);
+    border-top: 6px solid var(--accent, var(--olive));
     border-radius: 14px;
-    padding: 2rem 1.9rem 1.75rem;
+    padding: 1.6rem 1.9rem 1.75rem;
     cursor: pointer;
     transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
     display: flex;
@@ -177,27 +261,24 @@ b, strong { font-weight: 600; }
 
 .recipe-card:hover {
     transform: translateY(-5px);
-    border-color: var(--olive);
+    border-color: var(--accent, var(--olive));
     box-shadow: 0 14px 30px rgba(43, 36, 22, 0.12);
 }
 
 .recipe-card .card-emoji {
     font-size: 2.6rem;
-    margin-bottom: 1rem;
+    background: color-mix(in srgb, var(--accent, var(--olive)) 20%, var(--paper));
+    border-radius: 10px;
+    text-align: center;
+    padding: 1.1rem 0;
+    margin-bottom: 1.1rem;
 }
 
-.recipe-card .card-cat {
-    font-family: var(--mono);
-    font-size: 0.7rem;
-    font-weight: 700;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--olive-deep);
-    background: var(--chip);
-    border-radius: 999px;
-    padding: 0.3rem 0.85rem;
-    align-self: flex-start;
-    margin-bottom: 1rem;
+.recipe-card .card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin-bottom: 1.1rem;
 }
 
 .recipe-card h3 {
@@ -212,7 +293,7 @@ b, strong { font-weight: 600; }
     font-style: italic;
     color: var(--ink-soft);
     font-size: 0.97rem;
-    margin-bottom: 1.1rem;
+    margin-bottom: 0.9rem;
 }
 
 .recipe-card .card-stats {
@@ -276,10 +357,12 @@ b, strong { font-weight: 600; }
 
 .chip:hover { border-color: var(--olive); color: var(--olive-deep); }
 
-.chip.on {
-    background: var(--olive);
-    border-color: var(--olive);
-    color: var(--paper);
+.chip .dot {
+    display: inline-block;
+    width: 0.55em;
+    height: 0.55em;
+    border-radius: 50%;
+    margin-right: 0.45em;
 }
 
 .chip .chip-count { opacity: 0.75; }
@@ -342,6 +425,7 @@ b, strong { font-weight: 600; }
 }
 
 .shopping-table th.col-check { width: 3.2rem; text-align: center; }
+.shopping-table th.col-nutrients { width: 30%; }
 
 .shopping-table tbody td {
     padding: 0.85rem 1.1rem;
@@ -382,16 +466,28 @@ tr.done { opacity: 0.55; }
     font-size: 0.72rem;
     font-weight: 700;
     letter-spacing: 0.06em;
-    color: var(--olive-deep);
-    background: var(--chip);
+    color: var(--ink);
+    background: color-mix(in srgb, var(--accent, var(--olive)) 18%, var(--paper));
     border: none;
+    border-left: 3px solid var(--accent, var(--olive));
     border-radius: 5px;
     padding: 0.3rem 0.7rem;
     cursor: pointer;
     transition: all 0.2s ease;
 }
 
-.badge:hover { background: var(--olive); color: var(--paper); }
+.badge:hover {
+    background: var(--accent, var(--olive));
+    color: var(--paper);
+}
+
+.nutri-cell {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+}
+
+.no-nutri { color: var(--ink-soft); }
 
 .empty-row td {
     text-align: center;
@@ -443,18 +539,11 @@ tr.done { opacity: 0.55; }
 
 .modal-close:hover { color: var(--ink); }
 
-.m-cat {
-    display: inline-block;
-    font-family: var(--mono);
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--olive-deep);
-    background: var(--chip);
-    border-radius: 999px;
-    padding: 0.32rem 0.9rem;
-    margin-bottom: 1rem;
+.m-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 1.1rem;
 }
 
 .m-title {
@@ -472,11 +561,16 @@ tr.done { opacity: 0.55; }
 }
 
 .m-intro {
-    font-size: 1rem;
-    border-left: 4px solid var(--olive);
-    background: var(--paper-soft);
+    font-family: var(--hand);
+    font-weight: 500;
+    font-size: 1.5rem;
+    line-height: 1.35;
+    color: var(--ink);
+    border-left: 4px solid var(--amber);
+    background: var(--cream-ch);
+    border-radius: 0 10px 10px 0;
     padding: 1rem 1.25rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.6rem;
 }
 
 .m-h {
@@ -505,9 +599,12 @@ tr.done { opacity: 0.55; }
     content: "✓";
     position: absolute;
     left: 0;
-    color: var(--olive);
+    color: var(--sage);
     font-weight: 700;
 }
+
+.m-ingredients li:nth-child(3n+2)::before { color: var(--tomato); }
+.m-ingredients li:nth-child(3n)::before   { color: var(--amber); }
 
 .m-ingredients .ing-note {
     font-style: italic;
@@ -541,6 +638,10 @@ tr.done { opacity: 0.55; }
     align-items: center;
     justify-content: center;
 }
+
+.m-steps li:nth-child(4n+2)::before { background: var(--caramel); color: var(--ink); }
+.m-steps li:nth-child(4n+3)::before { background: var(--tomato); }
+.m-steps li:nth-child(4n)::before   { background: var(--slate); }
 
 /* ============ FOOTER ============ */
 

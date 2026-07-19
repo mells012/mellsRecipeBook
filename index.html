@@ -7,7 +7,7 @@
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🥣</text></svg>">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700;9..144,900&family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700;9..144,900&family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -21,9 +21,9 @@
         </div>
         <div class="hero-meta">
             <span><b>Recetas:</b> <span id="meta-recipes">–</span></span>
-            <span><b>Categorías:</b> <span id="meta-categories">–</span></span>
             <span><b>Ingredientes:</b> <span id="meta-ingredients">–</span></span>
         </div>
+        <div class="hero-nutrients" id="hero-nutrients"></div>
     </header>
 
     <hr class="rule">
@@ -31,7 +31,7 @@
     <!-- ============ NAV ============ -->
     <nav class="tabs" aria-label="Secciones">
         <button class="tab-btn active" data-tab="recipes">Recetario</button>
-        <button class="tab-btn" data-tab="shopping">Lista de compras</button>
+        <button class="tab-btn" data-tab="shopping">Ingredientes</button>
     </nav>
 
     <main class="content">
@@ -42,12 +42,12 @@
             <div class="recipes-grid" id="recipes-grid"></div>
         </section>
 
-        <!-- ============ LISTA DE COMPRAS ============ -->
+        <!-- ============ INGREDIENTES ============ -->
         <section id="shopping-tab" class="tab-panel">
-            <h2 class="section-title">Lista de compras</h2>
+            <h2 class="section-title">Ingredientes</h2>
 
             <div class="filter-bar">
-                <span class="filter-label">FILTRAR POR TIPO</span>
+                <span class="filter-label">FILTRAR POR NUTRIENTE</span>
                 <div class="filter-chips" id="filter-chips"></div>
             </div>
 
@@ -63,6 +63,7 @@
                             <th class="col-check">✓</th>
                             <th class="col-name">Ingrediente</th>
                             <th class="col-recipes">Aparece en las recetas</th>
+                            <th class="col-nutrients">Aporta</th>
                         </tr>
                     </thead>
                     <tbody id="shopping-body"></tbody>
@@ -73,7 +74,7 @@
     </main>
 
     <footer class="footer">
-        <p>MELL'S RECIPE BOOK &nbsp;·&nbsp; hecho con 🤎 y yogur natural</p>
+        <p>MELL'S RECIPE BOOK &nbsp;·&nbsp; hecho con 🤎</p>
     </footer>
 
     <!-- ============ MODAL DE RECETA ============ -->

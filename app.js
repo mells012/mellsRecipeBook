@@ -7,10 +7,17 @@ const STORE = {
     checked: "mrb.checked"
 };
 
+const NUTRIENT_ORDER = [...MACROS, ...MICROS];
+
 const state = {
     filters: new Set(JSON.parse(localStorage.getItem(STORE.filters) || "[]")),
     checked: new Set(JSON.parse(localStorage.getItem(STORE.checked) || "[]"))
 };
+
+// Descarta filtros guardados que ya no existan (p. ej. de versiones anteriores)
+for (const f of [...state.filters]) {
+    if (!NUTRIENT_ORDER.includes(f)) state.filters.delete(f);
+}
 
 const $ = (sel) => document.querySelector(sel);
 
@@ -23,12 +30,27 @@ function save() {
     localStorage.setItem(STORE.checked, JSON.stringify([...state.checked]));
 }
 
-const categories = () => [...new Set(RECIPES.map((r) => r.category))];
+const byNutrientOrder = (a, b) => NUTRIENT_ORDER.indexOf(a) - NUTRIENT_ORDER.indexOf(b);
+
+function nutrientChip(name, extra = "") {
+    const c = NUTRIENT_COLORS[name] || { bg: "#D0CAB2", fg: "#272216" };
+    return `<span class="nutri-chip ${extra}" style="background:${c.bg};color:${c.fg}">${esc(name)}</span>`;
+}
+
+function missingChip(name) {
+    return `<span class="nutri-chip miss">${esc(name)}</span>`;
+}
+
+// Nutrientes por los que se puede filtrar (los que usa alguna receta)
+function filterOptions() {
+    const used = new Set(RECIPES.flatMap((r) => r.nutrients));
+    return NUTRIENT_ORDER.filter((n) => used.has(n));
+}
 
 // Recetas visibles según filtros (sin filtros = todas)
 function visibleRecipes() {
     if (state.filters.size === 0) return RECIPES;
-    return RECIPES.filter((r) => state.filters.has(r.category));
+    return RECIPES.filter((r) => r.nutrients.some((n) => state.filters.has(n)));
 }
 
 // Compila los ingredientes de las recetas visibles en una sola lista
@@ -54,17 +76,36 @@ function compileIngredients() {
 function renderMeta() {
     const allNames = new Set(RECIPES.flatMap((r) => r.ingredients.map((i) => i.name)));
     $("#meta-recipes").textContent = RECIPES.length;
-    $("#meta-categories").textContent = categories().length;
     $("#meta-ingredients").textContent = allNames.size;
+
+    // Nutrientes cubiertos por el recetario vs. los que faltan
+    const covered = new Set([
+        ...RECIPES.flatMap((r) => r.nutrients),
+        ...[...allNames].flatMap((n) => INGREDIENT_NUTRIENTS[n] || [])
+    ]);
+    const present = NUTRIENT_ORDER.filter((n) => covered.has(n));
+    const missing = NUTRIENT_ORDER.filter((n) => !covered.has(n));
+
+    $("#hero-nutrients").innerHTML = `
+        <div class="hn-row">
+            <span class="hn-label">CUBRE</span>
+            ${present.map((n) => nutrientChip(n, "small")).join("")}
+        </div>
+        <div class="hn-row">
+            <span class="hn-label hn-falta">FALTA</span>
+            ${missing.length ? missing.map(missingChip).join("") : '<span class="hn-none">nada 🎉</span>'}
+        </div>`;
 }
 
 function renderRecipes() {
     $("#recipes-grid").innerHTML = RECIPES.map((r) => `
-        <article class="recipe-card" data-recipe="${r.id}">
+        <article class="recipe-card" data-recipe="${r.id}" style="--accent:${r.accent}">
             <div class="card-emoji">${r.emoji}</div>
-            <span class="card-cat">${esc(r.category)}</span>
             <h3>${esc(r.name)}</h3>
             <p class="card-sub">${esc(r.subtitle)}</p>
+            <div class="card-tags">
+                ${[...r.nutrients].sort(byNutrientOrder).map((n) => nutrientChip(n, "small")).join("")}
+            </div>
             <div class="card-stats">
                 <span><b>${r.ingredients.length}</b> ingredientes</span>
                 <span class="card-link">Ver receta →</span>
@@ -74,12 +115,15 @@ function renderRecipes() {
 }
 
 function renderFilters() {
-    $("#filter-chips").innerHTML = categories().map((cat) => {
-        const count = RECIPES.filter((r) => r.category === cat).length;
-        const on = state.filters.has(cat);
+    $("#filter-chips").innerHTML = filterOptions().map((n) => {
+        const count = RECIPES.filter((r) => r.nutrients.includes(n)).length;
+        const on = state.filters.has(n);
+        const c = NUTRIENT_COLORS[n] || { bg: "#D0CAB2", fg: "#272216" };
+        const style = on ? `style="background:${c.bg};border-color:${c.bg};color:${c.fg}"` : "";
+        const dot = on ? "" : `<span class="dot" style="background:${c.bg}"></span>`;
         return `
-        <button class="chip ${on ? "on" : ""}" data-cat="${esc(cat)}">
-            ${on ? "✓ " : ""}${esc(cat)} <span class="chip-count">(${count})</span>
+        <button class="chip ${on ? "on" : ""}" data-nutrient="${esc(n)}" ${style}>
+            ${dot}${esc(n)} <span class="chip-count">(${count})</span>
         </button>`;
     }).join("");
 }
@@ -89,7 +133,7 @@ function renderShoppingList() {
     const body = $("#shopping-body");
 
     if (items.length === 0) {
-        body.innerHTML = `<tr class="empty-row"><td colspan="3">No hay ingredientes para mostrar.</td></tr>`;
+        body.innerHTML = `<tr class="empty-row"><td colspan="4">No hay ingredientes para mostrar.</td></tr>`;
         $("#shopping-progress").textContent = "—";
         return;
     }
@@ -100,8 +144,12 @@ function renderShoppingList() {
             ? `<span class="ing-note">${esc([...new Set(item.notes)].join(" · "))}</span>`
             : "";
         const badges = item.recipes.map((r) =>
-            `<button class="badge" data-recipe="${r.id}" title="Ver receta">${r.emoji} ${esc(r.name)}</button>`
+            `<button class="badge" data-recipe="${r.id}" style="--accent:${r.accent}" title="Ver receta">${r.emoji} ${esc(r.name)}</button>`
         ).join("");
+        const nutrients = (INGREDIENT_NUTRIENTS[item.name] || []);
+        const nutriCell = nutrients.length
+            ? [...nutrients].sort(byNutrientOrder).map((n) => nutrientChip(n, "small")).join("")
+            : `<span class="no-nutri">—</span>`;
         return `
         <tr class="${done ? "done" : ""}">
             <td class="cell-check">
@@ -110,6 +158,7 @@ function renderShoppingList() {
             </td>
             <td class="cell-name">${esc(item.name)}${note}</td>
             <td><div class="badges">${badges}</div></td>
+            <td><div class="nutri-cell">${nutriCell}</div></td>
         </tr>`;
     }).join("");
 
@@ -125,7 +174,9 @@ function openRecipe(id) {
     if (!r) return;
 
     $("#modal-body").innerHTML = `
-        <span class="m-cat">${esc(r.category)}</span>
+        <div class="m-tags">
+            ${[...r.nutrients].sort(byNutrientOrder).map((n) => nutrientChip(n)).join("")}
+        </div>
         <h2 class="m-title">${r.emoji} ${esc(r.name)}</h2>
         <p class="m-sub">${esc(r.subtitle)}</p>
         <p class="m-intro">${esc(r.intro)}</p>
@@ -160,7 +211,7 @@ function switchTab(tab) {
         b.classList.toggle("active", b.dataset.tab === tab));
     document.querySelectorAll(".tab-panel").forEach((p) =>
         p.classList.toggle("active", p.id === `${tab}-tab`));
-    history.replaceState(null, "", tab === "shopping" ? "#compras" : "#recetario");
+    history.replaceState(null, "", tab === "shopping" ? "#ingredientes" : "#recetario");
 }
 
 // ============ EVENTOS ============
@@ -177,12 +228,12 @@ function setupEvents() {
         if (card) openRecipe(card.dataset.recipe);
     });
 
-    // Filtros multiselección
+    // Filtros multiselección por nutriente
     $("#filter-chips").addEventListener("click", (e) => {
-        const chip = e.target.closest("[data-cat]");
+        const chip = e.target.closest("[data-nutrient]");
         if (!chip) return;
-        const cat = chip.dataset.cat;
-        state.filters.has(cat) ? state.filters.delete(cat) : state.filters.add(cat);
+        const n = chip.dataset.nutrient;
+        state.filters.has(n) ? state.filters.delete(n) : state.filters.add(n);
         save();
         renderFilters();
         renderShoppingList();
@@ -191,7 +242,7 @@ function setupEvents() {
     // Checklist + etiquetas de receta dentro de la tabla
     $("#shopping-body").addEventListener("click", (e) => {
         const badge = e.target.closest(".badge");
-        if (badge) { openRecipe(badge.dataset.recipe); return; }
+        if (badge) openRecipe(badge.dataset.recipe);
     });
 
     $("#shopping-body").addEventListener("change", (e) => {
@@ -227,4 +278,4 @@ renderRecipes();
 renderFilters();
 renderShoppingList();
 setupEvents();
-if (location.hash === "#compras") switchTab("shopping");
+if (location.hash === "#ingredientes" || location.hash === "#compras") switchTab("shopping");
