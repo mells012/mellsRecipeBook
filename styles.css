@@ -41,56 +41,35 @@ b, strong { font-weight: 600; }
 .hero {
     max-width: 900px;
     margin: 0 auto;
-    padding: 4.5rem 1.5rem 3rem;
+    padding: 2.75rem 1.5rem 2rem;
     text-align: center;
 }
 
 .eyebrow {
     font-family: var(--mono);
-    font-size: 0.8rem;
+    font-size: 0.78rem;
     font-weight: 500;
     letter-spacing: 0.35em;
     color: var(--slate);
-    margin-bottom: 1.75rem;
+    margin-bottom: 1rem;
 }
 
 .hero-title {
     font-family: var(--serif);
     font-weight: 900;
-    font-size: clamp(3rem, 9vw, 5.5rem);
-    line-height: 1.02;
+    font-size: clamp(2.4rem, 6.5vw, 3.8rem);
+    line-height: 1.05;
     letter-spacing: -0.02em;
-    margin-bottom: 1.75rem;
-}
-
-.hero-pill {
-    display: inline-block;
-    font-family: var(--mono);
-    font-size: 0.78rem;
-    font-weight: 500;
-    letter-spacing: 0.22em;
-    color: var(--paper);
-    background: var(--olive);
-    padding: 0.55rem 1.4rem;
-    border-radius: 999px;
-    margin-bottom: 1.9rem;
+    margin-bottom: 1.1rem;
 }
 
 .hero-emojis {
     display: flex;
     justify-content: center;
-    gap: 1.4rem;
-    font-size: 1.9rem;
-    margin-bottom: 2rem;
+    gap: 1.1rem;
+    font-size: 1.5rem;
+    margin-bottom: 1.25rem;
     flex-wrap: wrap;
-}
-
-.hero-quote {
-    font-family: var(--body);
-    font-style: italic;
-    font-size: clamp(1.15rem, 3vw, 1.45rem);
-    line-height: 1.6;
-    margin-bottom: 2.5rem;
 }
 
 .hero-meta {
@@ -120,34 +99,34 @@ b, strong { font-weight: 600; }
 .tabs {
     display: flex;
     justify-content: center;
-    gap: 0.75rem;
-    padding: 2rem 1.5rem 0;
+    gap: 1.25rem;
+    padding: 1.75rem 1.5rem 0;
     flex-wrap: wrap;
 }
 
 .tab-btn {
-    font-family: var(--mono);
-    font-size: 0.85rem;
-    font-weight: 500;
-    letter-spacing: 0.08em;
+    font-family: var(--body);
+    font-size: 1.05rem;
+    font-weight: 600;
     color: var(--ink-soft);
     background: transparent;
-    border: 1.5px solid var(--line);
-    border-radius: 999px;
-    padding: 0.6rem 1.5rem;
+    border: none;
+    border-left: 4px solid var(--line);
+    padding: 0.85rem 1.75rem;
+    text-align: left;
     cursor: pointer;
     transition: all 0.25s ease;
 }
 
 .tab-btn:hover {
-    border-color: var(--olive);
+    background: var(--paper-soft);
     color: var(--olive-deep);
 }
 
 .tab-btn.active {
-    background: var(--olive);
-    border-color: var(--olive);
-    color: var(--paper);
+    background: var(--paper-soft);
+    border-left-color: var(--olive);
+    color: var(--olive-deep);
 }
 
 /* ============ LAYOUT ============ */
@@ -169,36 +148,13 @@ b, strong { font-weight: 600; }
     to   { opacity: 1; transform: translateY(0); }
 }
 
-.section-label {
-    font-family: var(--mono);
-    font-size: 0.8rem;
-    font-weight: 500;
-    letter-spacing: 0.35em;
-    color: var(--slate);
-    margin-bottom: 0.5rem;
-}
-
 .section-title {
     font-family: var(--serif);
     font-weight: 900;
-    font-size: clamp(2rem, 5.5vw, 3rem);
+    font-size: clamp(1.8rem, 5vw, 2.6rem);
     letter-spacing: -0.01em;
     margin-bottom: 1.75rem;
 }
-
-.section-num { color: var(--amber); }
-
-/* ============ CALLOUT ============ */
-
-.callout {
-    border-left: 4px solid var(--olive);
-    background: var(--paper-soft);
-    padding: 1.4rem 1.75rem;
-    margin-bottom: 2.75rem;
-    font-size: 1rem;
-}
-
-.callout b { color: var(--olive-deep); }
 
 /* ============ RECIPE CARDS ============ */
 
@@ -523,20 +479,6 @@ tr.done { opacity: 0.55; }
     margin-bottom: 1.5rem;
 }
 
-.m-stats {
-    font-family: var(--mono);
-    font-size: 0.85rem;
-    color: var(--ink-soft);
-    display: flex;
-    gap: 2rem;
-    padding: 1rem 0;
-    border-top: 1px solid var(--line);
-    border-bottom: 1px solid var(--line);
-    margin-bottom: 1.75rem;
-}
-
-.m-stats b { color: var(--olive-deep); font-size: 1.05rem; }
-
 .m-h {
     font-family: var(--serif);
     font-weight: 700;
@@ -610,6 +552,15 @@ tr.done { opacity: 0.55; }
     font-size: 0.78rem;
     letter-spacing: 0.22em;
     color: var(--ink-soft);
+}
+
+/* ============ ACCESIBILIDAD ============ */
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation: none !important;
+        transition: none !important;
+    }
 }
 
 /* ============ RESPONSIVE ============ */

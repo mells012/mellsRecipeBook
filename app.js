@@ -59,22 +59,18 @@ function renderMeta() {
 }
 
 function renderRecipes() {
-    $("#recipes-grid").innerHTML = RECIPES.map((r) => {
-        const stats = r.kcal
-            ? `<span><b>${r.kcal}</b> kcal · <b>${r.protein} g</b> proteína</span>`
-            : `<span><b>${r.ingredients.length}</b> ingredientes</span>`;
-        return `
+    $("#recipes-grid").innerHTML = RECIPES.map((r) => `
         <article class="recipe-card" data-recipe="${r.id}">
             <div class="card-emoji">${r.emoji}</div>
             <span class="card-cat">${esc(r.category)}</span>
             <h3>${esc(r.name)}</h3>
             <p class="card-sub">${esc(r.subtitle)}</p>
             <div class="card-stats">
-                ${stats}
+                <span><b>${r.ingredients.length}</b> ingredientes</span>
                 <span class="card-link">Ver receta →</span>
             </div>
-        </article>`;
-    }).join("");
+        </article>`
+    ).join("");
 }
 
 function renderFilters() {
@@ -128,23 +124,11 @@ function openRecipe(id) {
     const r = RECIPES.find((x) => x.id === id);
     if (!r) return;
 
-    const stats = r.kcal
-        ? `<div class="m-stats">
-               <span><b>${r.kcal}</b> kcal</span>
-               <span><b>${r.protein} g</b> proteína</span>
-               <span><b>${r.steps.length}</b> pasos</span>
-           </div>`
-        : `<div class="m-stats">
-               <span><b>${r.ingredients.length}</b> ingredientes</span>
-               <span><b>${r.steps.length}</b> pasos</span>
-           </div>`;
-
     $("#modal-body").innerHTML = `
         <span class="m-cat">${esc(r.category)}</span>
         <h2 class="m-title">${r.emoji} ${esc(r.name)}</h2>
         <p class="m-sub">${esc(r.subtitle)}</p>
         <p class="m-intro">${esc(r.intro)}</p>
-        ${stats}
         <div class="m-section">
             <h3 class="m-h">Ingredientes</h3>
             <ul class="m-ingredients">

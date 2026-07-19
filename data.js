@@ -12,9 +12,7 @@ const RECIPES = [
         subtitle: "Yogur salado con huevo",
         category: "Bowl proteico",
         emoji: "🥣",
-        kcal: null,
-        protein: null,
-        intro: "El bowl que empezó todo: yogur condimentado, vegetales ampollados en el air fryer y un huevo de yema suave.",
+        intro: "Yogur griego condimentado con eneldo y pasta de ajo, cubierto con tomates cherry, pimiento y champiñones asados al air fryer y un huevo cocido de yema suave. Se sirve con pan tostado.",
         ingredients: [
             { name: "Yogur natural", note: "griego, sin azúcar" },
             { name: "Tomates cherry" },
@@ -42,9 +40,7 @@ const RECIPES = [
         subtitle: "Versión turca",
         category: "Bowl proteico",
         emoji: "🥚",
-        kcal: null,
-        protein: null,
-        intro: "El clásico turco: huevos pasados por agua sobre yogur especiado, bañados en mantequilla con chili.",
+        intro: "Huevos pasados por agua sobre una base de yogur especiado con paprika, ajo y eneldo, bañados en mantequilla derretida con hojuelas de chili. Se acompaña con pan tostado.",
         ingredients: [
             { name: "Yogur natural" },
             { name: "Sal", note: "para el yogur" },
@@ -70,9 +66,7 @@ const RECIPES = [
         subtitle: "Bowl vegetal cremoso",
         category: "Bowl vegetal",
         emoji: "🥑",
-        kcal: 458,
-        protein: 31,
-        intro: "Bowl colorido sobre yogur: guacamole simple, camote asado, tomates con quesos y un final de feta.",
+        intro: "Bowl sobre yogur condimentado con cebollín, armado con guacamole, camote asado, tomates horneados con bocconcini y queso cottage, ajo y champiñones. Se termina con feta desmenuzado.",
         ingredients: [
             { name: "Yogur natural" },
             { name: "Sal", note: "para el yogur y el guacamole" },

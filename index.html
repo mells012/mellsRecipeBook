@@ -16,16 +16,13 @@
     <header class="hero">
         <p class="eyebrow">RECETARIO PERSONAL &nbsp;·&nbsp; MELL'S KITCHEN</p>
         <h1 class="hero-title">Mell's Recipe Book</h1>
-        <span class="hero-pill">MENÚ &nbsp;·&nbsp; RECETAS &nbsp;·&nbsp; LISTA DE COMPRAS</span>
         <div class="hero-emojis" aria-hidden="true">
             <span>🥣</span><span>🥚</span><span>🥑</span><span>🍅</span><span>🧄</span><span>🍄</span><span>🧀</span><span>🌿</span>
         </div>
-        <p class="hero-quote">«Cocinar rico toda la semana,<br>comprar todo en una sola vuelta.»</p>
         <div class="hero-meta">
             <span><b>Recetas:</b> <span id="meta-recipes">–</span></span>
             <span><b>Categorías:</b> <span id="meta-categories">–</span></span>
             <span><b>Ingredientes:</b> <span id="meta-ingredients">–</span></span>
-            <span><b>Modo:</b> checklist de compras</span>
         </div>
     </header>
 
@@ -33,38 +30,21 @@
 
     <!-- ============ NAV ============ -->
     <nav class="tabs" aria-label="Secciones">
-        <button class="tab-btn active" data-tab="recipes">01 · Recetario</button>
-        <button class="tab-btn" data-tab="shopping">02 · Lista de compras</button>
+        <button class="tab-btn active" data-tab="recipes">Recetario</button>
+        <button class="tab-btn" data-tab="shopping">Lista de compras</button>
     </nav>
 
     <main class="content">
 
-        <!-- ============ SECCIÓN 01 · RECETARIO ============ -->
+        <!-- ============ RECETARIO ============ -->
         <section id="recipes-tab" class="tab-panel active">
-            <p class="section-label">SECCIÓN 01</p>
-            <h2 class="section-title"><span class="section-num">01 ·</span> El recetario</h2>
-
-            <aside class="callout">
-                <p><b>Cómo funciona.</b> Cada tarjeta es una receta guardada en el board. Haz clic
-                en cualquiera para abrir su ficha completa: ingredientes, pasos de preparación y
-                datos nutricionales. Las recetas se irán añadiendo poco a poco.</p>
-            </aside>
-
+            <h2 class="section-title">El recetario</h2>
             <div class="recipes-grid" id="recipes-grid"></div>
         </section>
 
-        <!-- ============ SECCIÓN 02 · LISTA DE COMPRAS ============ -->
+        <!-- ============ LISTA DE COMPRAS ============ -->
         <section id="shopping-tab" class="tab-panel">
-            <p class="section-label">SECCIÓN 02</p>
-            <h2 class="section-title"><span class="section-num">02 ·</span> Lista de compras</h2>
-
-            <aside class="callout">
-                <p><b>Cómo funciona.</b> Selecciona los tipos de receta que quieres cocinar
-                (filtro multiselección) y se compilan los ingredientes de esas recetas en una sola
-                lista. Marca lo que ya compraste — el estado se guarda en tu navegador. Cada
-                etiqueta de receta te lleva a su ficha. <b>Sin filtros activos se muestran todas
-                las recetas.</b></p>
-            </aside>
+            <h2 class="section-title">Lista de compras</h2>
 
             <div class="filter-bar">
                 <span class="filter-label">FILTRAR POR TIPO</span>
