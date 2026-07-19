@@ -30,8 +30,6 @@ function save() {
     localStorage.setItem(STORE.checked, JSON.stringify([...state.checked]));
 }
 
-const byNutrientOrder = (a, b) => NUTRIENT_ORDER.indexOf(a) - NUTRIENT_ORDER.indexOf(b);
-
 function nutrientChip(name, extra = "") {
     const c = NUTRIENT_COLORS[name] || { bg: "#D0CAB2", fg: "#272216" };
     return `<span class="nutri-chip ${extra}" style="background:${c.bg};color:${c.fg}">${esc(name)}</span>`;
@@ -41,10 +39,22 @@ function missingChip(name) {
     return `<span class="nutri-chip miss">${esc(name)}</span>`;
 }
 
-// Nutrientes por los que se puede filtrar (los que usa alguna receta)
-function filterOptions() {
-    const used = new Set(RECIPES.flatMap((r) => r.nutrients));
-    return NUTRIENT_ORDER.filter((n) => used.has(n));
+// Separa una lista de nutrientes en macros y micros (en orden canónico)
+function splitNutrients(names) {
+    const set = new Set(names);
+    return {
+        macros: MACROS.filter((n) => set.has(n)),
+        micros: MICROS.filter((n) => set.has(n))
+    };
+}
+
+// Grupos de chips con etiqueta MACROS / MICROS (omite grupos vacíos)
+function nutrientGroups(names, chipExtra = "small") {
+    const { macros, micros } = splitNutrients(names);
+    const group = (label, list) => list.length
+        ? `<div class="ngroup"><span class="ng-label">${label}</span>${list.map((n) => nutrientChip(n, chipExtra)).join("")}</div>`
+        : "";
+    return group("MACRO", macros) + group("MICRO", micros);
 }
 
 // Recetas visibles según filtros (sin filtros = todas)
@@ -83,13 +93,18 @@ function renderMeta() {
         ...RECIPES.flatMap((r) => r.nutrients),
         ...[...allNames].flatMap((n) => INGREDIENT_NUTRIENTS[n] || [])
     ]);
-    const present = NUTRIENT_ORDER.filter((n) => covered.has(n));
+    const presentMacros = MACROS.filter((n) => covered.has(n));
+    const presentMicros = MICROS.filter((n) => covered.has(n));
     const missing = NUTRIENT_ORDER.filter((n) => !covered.has(n));
 
     $("#hero-nutrients").innerHTML = `
         <div class="hn-row">
-            <span class="hn-label">CUBRE</span>
-            ${present.map((n) => nutrientChip(n, "small")).join("")}
+            <span class="hn-label">MACROS</span>
+            ${presentMacros.map((n) => nutrientChip(n, "small")).join("")}
+        </div>
+        <div class="hn-row">
+            <span class="hn-label">MICROS</span>
+            ${presentMicros.map((n) => nutrientChip(n, "small")).join("")}
         </div>
         <div class="hn-row">
             <span class="hn-label hn-falta">FALTA</span>
@@ -99,12 +114,12 @@ function renderMeta() {
 
 function renderRecipes() {
     $("#recipes-grid").innerHTML = RECIPES.map((r) => `
-        <article class="recipe-card" data-recipe="${r.id}" style="--accent:${r.accent}">
+        <article class="recipe-card" data-recipe="${r.id}">
             <div class="card-emoji">${r.emoji}</div>
             <h3>${esc(r.name)}</h3>
             <p class="card-sub">${esc(r.subtitle)}</p>
             <div class="card-tags">
-                ${[...r.nutrients].sort(byNutrientOrder).map((n) => nutrientChip(n, "small")).join("")}
+                ${nutrientGroups(r.nutrients)}
             </div>
             <div class="card-stats">
                 <span><b>${r.ingredients.length}</b> ingredientes</span>
@@ -114,18 +129,24 @@ function renderRecipes() {
     ).join("");
 }
 
+function filterChip(n) {
+    const count = RECIPES.filter((r) => r.nutrients.includes(n)).length;
+    const on = state.filters.has(n);
+    const c = NUTRIENT_COLORS[n] || { bg: "#D0CAB2", fg: "#272216" };
+    const style = on ? `style="background:${c.bg};border-color:${c.bg};color:${c.fg}"` : "";
+    const dot = on ? "" : `<span class="dot" style="background:${c.bg}"></span>`;
+    return `
+    <button class="chip ${on ? "on" : ""}" data-nutrient="${esc(n)}" ${style}>
+        ${dot}${esc(n)} <span class="chip-count">(${count})</span>
+    </button>`;
+}
+
 function renderFilters() {
-    $("#filter-chips").innerHTML = filterOptions().map((n) => {
-        const count = RECIPES.filter((r) => r.nutrients.includes(n)).length;
-        const on = state.filters.has(n);
-        const c = NUTRIENT_COLORS[n] || { bg: "#D0CAB2", fg: "#272216" };
-        const style = on ? `style="background:${c.bg};border-color:${c.bg};color:${c.fg}"` : "";
-        const dot = on ? "" : `<span class="dot" style="background:${c.bg}"></span>`;
-        return `
-        <button class="chip ${on ? "on" : ""}" data-nutrient="${esc(n)}" ${style}>
-            ${dot}${esc(n)} <span class="chip-count">(${count})</span>
-        </button>`;
-    }).join("");
+    const used = new Set(RECIPES.flatMap((r) => r.nutrients));
+    $("#filter-macros").innerHTML =
+        MACROS.filter((n) => used.has(n)).map(filterChip).join("");
+    $("#filter-micros").innerHTML =
+        MICROS.filter((n) => used.has(n)).map(filterChip).join("");
 }
 
 function renderShoppingList() {
@@ -144,11 +165,11 @@ function renderShoppingList() {
             ? `<span class="ing-note">${esc([...new Set(item.notes)].join(" · "))}</span>`
             : "";
         const badges = item.recipes.map((r) =>
-            `<button class="badge" data-recipe="${r.id}" style="--accent:${r.accent}" title="Ver receta">${r.emoji} ${esc(r.name)}</button>`
+            `<button class="badge" data-recipe="${r.id}" title="Ver receta">${r.emoji} ${esc(r.name)}</button>`
         ).join("");
         const nutrients = (INGREDIENT_NUTRIENTS[item.name] || []);
         const nutriCell = nutrients.length
-            ? [...nutrients].sort(byNutrientOrder).map((n) => nutrientChip(n, "small")).join("")
+            ? nutrientGroups(nutrients)
             : `<span class="no-nutri">—</span>`;
         return `
         <tr class="${done ? "done" : ""}">
@@ -175,7 +196,7 @@ function openRecipe(id) {
 
     $("#modal-body").innerHTML = `
         <div class="m-tags">
-            ${[...r.nutrients].sort(byNutrientOrder).map((n) => nutrientChip(n)).join("")}
+            ${nutrientGroups(r.nutrients)}
         </div>
         <h2 class="m-title">${r.emoji} ${esc(r.name)}</h2>
         <p class="m-sub">${esc(r.subtitle)}</p>
@@ -228,8 +249,8 @@ function setupEvents() {
         if (card) openRecipe(card.dataset.recipe);
     });
 
-    // Filtros multiselección por nutriente
-    $("#filter-chips").addEventListener("click", (e) => {
+    // Filtros multiselección por nutriente (macros y micros)
+    $(".filter-bar").addEventListener("click", (e) => {
         const chip = e.target.closest("[data-nutrient]");
         if (!chip) return;
         const n = chip.dataset.nutrient;

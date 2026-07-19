@@ -77,7 +77,6 @@ const RECIPES = [
         name: "La OG",
         subtitle: "Yogur salado con huevo",
         emoji: "🥣",
-        accent: "#6695E6",
         nutrients: ["Proteína", "Vitamina A", "Vitamina C", "Vitamina D"],
         intro: "Yogur griego condimentado con eneldo y pasta de ajo, cubierto con tomates cherry, pimiento y champiñones asados al air fryer y un huevo cocido de yema suave. Se sirve con pan tostado.",
         ingredients: [
@@ -106,7 +105,6 @@ const RECIPES = [
         name: "Çılbır",
         subtitle: "Versión turca",
         emoji: "🥚",
-        accent: "#D7A36A",
         nutrients: ["Proteína", "Grasas", "Calcio", "Vitamina D"],
         intro: "Huevos pasados por agua sobre una base de yogur especiado con paprika, ajo y eneldo, bañados en mantequilla derretida con hojuelas de chili. Se acompaña con pan tostado.",
         ingredients: [
@@ -133,7 +131,6 @@ const RECIPES = [
         name: "Camote y guacamole",
         subtitle: "Bowl vegetal cremoso",
         emoji: "🥑",
-        accent: "#6D8D5C",
         nutrients: ["Carbohidratos", "Grasas", "Fibra", "Calcio", "Vitamina A", "Potasio"],
         intro: "Bowl sobre yogur condimentado con cebollín, armado con guacamole, camote asado, tomates horneados con bocconcini y queso cottage, ajo y champiñones. Se termina con feta desmenuzado.",
         ingredients: [
