@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mell's Recipe Book</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1 class="title">📖 Mell's Recipe Book</h1>
+                <nav class="nav-tabs">
+                    <button class="nav-btn active" data-tab="recipes">Recetas</button>
+                    <button class="nav-btn" data-tab="shopping">Lista de Compras</button>
+                </nav>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Recipes Tab -->
+            <section id="recipes-tab" class="tab-content active">
+                <div class="recipes-grid">
+                    <!-- Las recetas se generarán aquí -->
+                </div>
+            </section>
+
+            <!-- Shopping List Tab -->
+            <section id="shopping-tab" class="tab-content">
+                <div class="shopping-container">
+                    <!-- Filtros -->
+                    <div class="filters-section">
+                        <h2>Filtrar por categoría</h2>
+                        <div class="category-filters">
+                            <!-- Se generarán dinámicamente -->
+                        </div>
+                    </div>
+
+                    <!-- Tabla de ingredientes -->
+                    <div class="shopping-list-section">
+                        <div class="shopping-header">
+                            <h2>Ingredientes a Comprar</h2>
+                            <button class="btn-clear-all" id="clear-all-btn">Limpiar lista</button>
+                        </div>
+                        <div class="shopping-list">
+                            <!-- Se generará dinámicamente -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modal para ver detalles de la receta -->
+    <div id="recipe-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="modal-body">
+                <!-- Se llenará dinámicamente -->
+            </div>
+        </div>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
