@@ -154,7 +154,7 @@ function renderShoppingList() {
     const body = $("#shopping-body");
 
     if (items.length === 0) {
-        body.innerHTML = `<tr class="empty-row"><td colspan="4">No hay ingredientes para mostrar.</td></tr>`;
+        body.innerHTML = `<tr class="empty-row"><td colspan="5">No hay ingredientes para mostrar.</td></tr>`;
         $("#shopping-progress").textContent = "—";
         return;
     }
@@ -167,9 +167,9 @@ function renderShoppingList() {
         const badges = item.recipes.map((r) =>
             `<button class="badge" data-recipe="${r.id}" title="Ver receta">${r.emoji} ${esc(r.name)}</button>`
         ).join("");
-        const nutrients = (INGREDIENT_NUTRIENTS[item.name] || []);
-        const nutriCell = nutrients.length
-            ? nutrientGroups(nutrients)
+        const { macros, micros } = splitNutrients(INGREDIENT_NUTRIENTS[item.name] || []);
+        const cell = (list) => list.length
+            ? `<div class="nutri-cell">${list.map((n) => nutrientChip(n, "small")).join("")}</div>`
             : `<span class="no-nutri">—</span>`;
         return `
         <tr class="${done ? "done" : ""}">
@@ -179,7 +179,8 @@ function renderShoppingList() {
             </td>
             <td class="cell-name">${esc(item.name)}${note}</td>
             <td><div class="badges">${badges}</div></td>
-            <td><div class="nutri-cell">${nutriCell}</div></td>
+            <td>${cell(macros)}</td>
+            <td>${cell(micros)}</td>
         </tr>`;
     }).join("");
 
@@ -203,10 +204,18 @@ function openRecipe(id) {
         <p class="m-intro">${esc(r.intro)}</p>
         <div class="m-section">
             <h3 class="m-h">Ingredientes</h3>
+            <p class="m-hint">Pasa el cursor sobre un ingrediente para ver qué aporta.</p>
             <ul class="m-ingredients">
-                ${r.ingredients.map((i) =>
-                    `<li>${esc(i.name)}${i.note ? ` <span class="ing-note">(${esc(i.note)})</span>` : ""}</li>`
-                ).join("")}
+                ${r.ingredients.map((i) => {
+                    const nuts = INGREDIENT_NUTRIENTS[i.name] || [];
+                    const tip = nuts.length
+                        ? nutrientGroups(nuts)
+                        : `<span class="tip-none">Sin aporte registrado</span>`;
+                    return `<li tabindex="0">
+                        <span class="ing-hover">${esc(i.name)}</span>${i.note ? ` <span class="ing-note">(${esc(i.note)})</span>` : ""}
+                        <span class="ing-tip" role="tooltip">${tip}</span>
+                    </li>`;
+                }).join("")}
             </ul>
         </div>
         <div class="m-section">

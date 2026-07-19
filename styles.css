@@ -252,7 +252,7 @@ b, strong { font-weight: 600; }
     height: 5px;
     border-radius: 3px;
     margin-top: 0.5rem;
-    background: var(--ink-soft);
+    background: var(--olive);
 }
 
 /* ============ RECIPE CARDS ============ */
@@ -266,7 +266,7 @@ b, strong { font-weight: 600; }
 .recipe-card {
     background: var(--paper-soft);
     border: 1.5px solid var(--line);
-    border-top: 6px solid var(--ink-soft);
+    border-top: 6px solid var(--olive);
     border-radius: 14px;
     padding: 1.6rem 1.9rem 1.75rem;
     cursor: pointer;
@@ -278,7 +278,7 @@ b, strong { font-weight: 600; }
 .recipe-card:hover {
     transform: translateY(-5px);
     border-color: var(--olive);
-    border-top-color: var(--ink-soft);
+    border-top-color: var(--olive);
     box-shadow: 0 14px 30px rgba(43, 36, 22, 0.12);
 }
 
@@ -448,7 +448,8 @@ b, strong { font-weight: 600; }
 }
 
 .shopping-table th.col-check { width: 3.2rem; text-align: center; }
-.shopping-table th.col-nutrients { width: 30%; }
+.shopping-table th.col-macros,
+.shopping-table th.col-micros { width: 17%; }
 
 .shopping-table tbody td {
     padding: 0.85rem 1.1rem;
@@ -492,7 +493,7 @@ tr.done { opacity: 0.55; }
     color: var(--ink);
     background: var(--chip);
     border: none;
-    border-left: 3px solid var(--ink-soft);
+    border-left: 3px solid var(--olive);
     border-radius: 5px;
     padding: 0.3rem 0.7rem;
     cursor: pointer;
@@ -605,6 +606,13 @@ tr.done { opacity: 0.55; }
 
 .m-section { margin-bottom: 1.75rem; }
 
+.m-hint {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--slate);
+    margin-bottom: 0.6rem;
+}
+
 .m-ingredients {
     list-style: none;
     columns: 2;
@@ -616,6 +624,40 @@ tr.done { opacity: 0.55; }
     padding: 0.3rem 0 0.3rem 1.5rem;
     position: relative;
     font-size: 0.97rem;
+}
+
+.m-ingredients .ing-hover {
+    text-decoration: underline dotted var(--olive) 1.5px;
+    text-underline-offset: 3px;
+    cursor: help;
+}
+
+.m-ingredients .ing-tip {
+    display: none;
+    position: absolute;
+    left: 1.2rem;
+    bottom: calc(100% + 4px);
+    z-index: 20;
+    flex-direction: column;
+    gap: 0.35rem;
+    min-width: 210px;
+    background: var(--paper);
+    border: 1.5px solid var(--olive);
+    border-radius: 8px;
+    padding: 0.6rem 0.8rem;
+    box-shadow: 0 10px 24px rgba(43, 36, 22, 0.22);
+}
+
+.m-ingredients li:hover .ing-tip,
+.m-ingredients li:focus .ing-tip,
+.m-ingredients li:focus-within .ing-tip {
+    display: flex;
+}
+
+.tip-none {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--ink-soft);
 }
 
 .m-ingredients li::before {
