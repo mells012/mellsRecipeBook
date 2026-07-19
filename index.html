@@ -4,90 +4,104 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mell's Recipe Book</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🥣</text></svg>">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Lora:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700;9..144,900&family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="page">
-        <!-- Header -->
-        <header class="header">
-            <div class="header-inner">
-                <h1 class="main-title">Mell's Recipe Book</h1>
-                <p class="subtitle">📖 Tus recetas favoritas compiladas</p>
-                <div class="header-meta">
-                    <span>Colección de bowls saludables • Menú flexible • Listas de compras</span>
-                </div>
-            </div>
-        </header>
 
-        <!-- Navigation Tabs -->
-        <nav class="nav-tabs">
-            <button class="nav-btn active" data-tab="recipes">🥘 Recetas</button>
-            <button class="nav-btn" data-tab="shopping">🛒 Lista de Compras</button>
-        </nav>
-
-        <!-- Main Content -->
-        <main class="main-content">
-            <!-- Recipes Tab -->
-            <section id="recipes-tab" class="tab-content active">
-                <div class="section-header">
-                    <h2>Nuestras Recetas</h2>
-                    <p class="section-description">Selecciona una receta para ver detalles completos, ingredientes y pasos de preparación.</p>
-                </div>
-                <div class="recipes-grid">
-                    <!-- Las recetas se generarán aquí -->
-                </div>
-            </section>
-
-            <!-- Shopping List Tab -->
-            <section id="shopping-tab" class="tab-content">
-                <div class="section-header">
-                    <h2>Lista de Compras Inteligente</h2>
-                    <p class="section-description">Filtra por categoría de receta y genera tu lista personalizada de ingredientes.</p>
-                </div>
-
-                <div class="shopping-container">
-                    <!-- Filtros -->
-                    <aside class="filters-section">
-                        <h3>Filtrar por Categoría</h3>
-                        <div class="category-filters">
-                            <!-- Se generarán dinámicamente -->
-                        </div>
-                    </aside>
-
-                    <!-- Tabla de ingredientes -->
-                    <div class="shopping-list-section">
-                        <div class="shopping-header">
-                            <div>
-                                <h3>Ingredientes a Comprar</h3>
-                                <p class="shopping-subtext" id="shopping-count">Selecciona una categoría para ver ingredientes</p>
-                            </div>
-                            <button class="btn-clear-all" id="clear-all-btn">↻ Limpiar lista</button>
-                        </div>
-                        <div class="shopping-list">
-                            <!-- Se generará dinámicamente -->
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </main>
-
-        <!-- Footer -->
-        <footer class="footer">
-            <p>Mell's Recipe Book © 2024 — Diseñado con <span class="heart">♡</span> para comer bien</p>
-        </footer>
-    </div>
-
-    <!-- Modal para ver detalles de la receta -->
-    <div id="recipe-modal" class="modal">
-        <div class="modal-content">
-            <button class="close" aria-label="Cerrar">&times;</button>
-            <div class="modal-body">
-                <!-- Se llenará dinámicamente -->
-            </div>
+    <!-- ============ HERO ============ -->
+    <header class="hero">
+        <p class="eyebrow">RECETARIO PERSONAL &nbsp;·&nbsp; MELL'S KITCHEN</p>
+        <h1 class="hero-title">Mell's Recipe Book</h1>
+        <span class="hero-pill">MENÚ &nbsp;·&nbsp; RECETAS &nbsp;·&nbsp; LISTA DE COMPRAS</span>
+        <div class="hero-emojis" aria-hidden="true">
+            <span>🥣</span><span>🥚</span><span>🥑</span><span>🍅</span><span>🧄</span><span>🍄</span><span>🧀</span><span>🌿</span>
         </div>
+        <p class="hero-quote">«Cocinar rico toda la semana,<br>comprar todo en una sola vuelta.»</p>
+        <div class="hero-meta">
+            <span><b>Recetas:</b> <span id="meta-recipes">–</span></span>
+            <span><b>Categorías:</b> <span id="meta-categories">–</span></span>
+            <span><b>Ingredientes:</b> <span id="meta-ingredients">–</span></span>
+            <span><b>Modo:</b> checklist de compras</span>
+        </div>
+    </header>
+
+    <hr class="rule">
+
+    <!-- ============ NAV ============ -->
+    <nav class="tabs" aria-label="Secciones">
+        <button class="tab-btn active" data-tab="recipes">01 · Recetario</button>
+        <button class="tab-btn" data-tab="shopping">02 · Lista de compras</button>
+    </nav>
+
+    <main class="content">
+
+        <!-- ============ SECCIÓN 01 · RECETARIO ============ -->
+        <section id="recipes-tab" class="tab-panel active">
+            <p class="section-label">SECCIÓN 01</p>
+            <h2 class="section-title"><span class="section-num">01 ·</span> El recetario</h2>
+
+            <aside class="callout">
+                <p><b>Cómo funciona.</b> Cada tarjeta es una receta guardada en el board. Haz clic
+                en cualquiera para abrir su ficha completa: ingredientes, pasos de preparación y
+                datos nutricionales. Las recetas se irán añadiendo poco a poco.</p>
+            </aside>
+
+            <div class="recipes-grid" id="recipes-grid"></div>
+        </section>
+
+        <!-- ============ SECCIÓN 02 · LISTA DE COMPRAS ============ -->
+        <section id="shopping-tab" class="tab-panel">
+            <p class="section-label">SECCIÓN 02</p>
+            <h2 class="section-title"><span class="section-num">02 ·</span> Lista de compras</h2>
+
+            <aside class="callout">
+                <p><b>Cómo funciona.</b> Selecciona los tipos de receta que quieres cocinar
+                (filtro multiselección) y se compilan los ingredientes de esas recetas en una sola
+                lista. Marca lo que ya compraste — el estado se guarda en tu navegador. Cada
+                etiqueta de receta te lleva a su ficha. <b>Sin filtros activos se muestran todas
+                las recetas.</b></p>
+            </aside>
+
+            <div class="filter-bar">
+                <span class="filter-label">FILTRAR POR TIPO</span>
+                <div class="filter-chips" id="filter-chips"></div>
+            </div>
+
+            <div class="list-toolbar">
+                <p class="progress" id="shopping-progress">–</p>
+                <button class="btn-ghost" id="clear-checked">↻ Desmarcar todo</button>
+            </div>
+
+            <div class="table-scroll">
+                <table class="shopping-table">
+                    <thead>
+                        <tr>
+                            <th class="col-check">✓</th>
+                            <th class="col-name">Ingrediente</th>
+                            <th class="col-recipes">Aparece en las recetas</th>
+                        </tr>
+                    </thead>
+                    <tbody id="shopping-body"></tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <p>MELL'S RECIPE BOOK &nbsp;·&nbsp; hecho con 🤎 y yogur natural</p>
+    </footer>
+
+    <!-- ============ MODAL DE RECETA ============ -->
+    <div id="recipe-modal" class="modal" aria-hidden="true">
+        <article class="modal-card">
+            <button class="modal-close" aria-label="Cerrar">×</button>
+            <div class="modal-body" id="modal-body"></div>
+        </article>
     </div>
 
     <script src="data.js"></script>

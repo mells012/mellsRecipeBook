@@ -1,53 +1,61 @@
-const recipes = [
+// ============================================================
+// Mell's Recipe Book · datos
+// Para añadir una receta: copia un bloque, dale un id nuevo y
+// usa el mismo nombre de ingrediente que en otras recetas para
+// que se agrupe en la lista de compras.
+// ============================================================
+
+const RECIPES = [
     {
-        id: 1,
+        id: "la-og",
         name: "La OG",
         subtitle: "Yogur salado con huevo",
-        category: "Bowls Proteicos",
-        image: "🥣",
-        kcal: 350,
-        protein: 28,
-        description: "Un bowl clásico con yogur cremoso, huevo suave y vegetales asados.",
+        category: "Bowl proteico",
+        emoji: "🥣",
+        kcal: null,
+        protein: null,
+        intro: "El bowl que empezó todo: yogur condimentado, vegetales ampollados en el air fryer y un huevo de yema suave.",
         ingredients: [
-            "Yogur natural (griego, sin azúcar)",
-            "Tomates cherry",
-            "Pimiento rojo",
-            "Ajo",
-            "Champiñones",
-            "Huevo",
-            "Sal y pimienta",
-            "Eneldo",
-            "Pasta de ajo",
-            "Aceite en spray",
-            "Pan tostado"
+            { name: "Yogur natural", note: "griego, sin azúcar" },
+            { name: "Tomates cherry" },
+            { name: "Pimiento rojo" },
+            { name: "Ajo" },
+            { name: "Champiñones" },
+            { name: "Huevo", note: "1 unidad" },
+            { name: "Sal" },
+            { name: "Pimienta" },
+            { name: "Eneldo" },
+            { name: "Pasta de ajo" },
+            { name: "Aceite en spray" },
+            { name: "Pan tostado", note: "1 rebanada, para acompañar" }
         ],
         steps: [
-            "Coloca tomates, pimiento, ajo y champiñones en un recipiente apto para horno, rocía aceite y salpimienta. Air fryer hasta que se ampollen/doren.",
+            "Coloca tomates, pimiento, ajo y champiñones en un recipiente apto para horno, rocía aceite y salpimienta. Air fryer hasta que se ampollen y doren.",
             "Hierve el huevo 6 minutos, pásalo 2 minutos a agua fría y pélalo (golpea, rueda y pela desde la base).",
             "Condimenta el yogur con sal, pimienta, eneldo y pasta de ajo.",
             "Cubre con los vegetales asados y el huevo; termina con sal, pimienta y eneldo. Sirve con el pan."
         ]
     },
     {
-        id: 2,
+        id: "cilbir",
         name: "Çılbır",
         subtitle: "Versión turca",
-        category: "Bowls Proteicos",
-        image: "🥚",
-        kcal: 380,
-        protein: 32,
-        description: "Clásico turco con huevos pochados, yogur condimentado y mantequilla especiada.",
+        category: "Bowl proteico",
+        emoji: "🥚",
+        kcal: null,
+        protein: null,
+        intro: "El clásico turco: huevos pasados por agua sobre yogur especiado, bañados en mantequilla con chili.",
         ingredients: [
-            "Yogur natural",
-            "Sal",
-            "Pimienta",
-            "Paprika",
-            "Ajo",
-            "Eneldo",
-            "Huevo",
-            "Mantequilla",
-            "Hojuelas de chili",
-            "Pan tostado"
+            { name: "Yogur natural" },
+            { name: "Sal", note: "para el yogur" },
+            { name: "Pimienta", note: "para el yogur" },
+            { name: "Paprika", note: "para el yogur y la mantequilla" },
+            { name: "Ajo", note: "para el yogur" },
+            { name: "Eneldo", note: "para el yogur" },
+            { name: "Huevo", note: "2 unidades" },
+            { name: "Mantequilla" },
+            { name: "Hojuelas de chili" },
+            { name: "Pan tostado", note: "1 rebanada" }
         ],
         steps: [
             "Mezcla el yogur con sal, pimienta, paprika, ajo y eneldo.",
@@ -57,30 +65,30 @@ const recipes = [
         ]
     },
     {
-        id: 3,
-        name: "Camote y Guacamole",
+        id: "camote-guac",
+        name: "Camote y guacamole",
         subtitle: "Bowl vegetal cremoso",
-        category: "Bowls Vegetales",
-        image: "🥑",
+        category: "Bowl vegetal",
+        emoji: "🥑",
         kcal: 458,
         protein: 31,
-        description: "Bowl colorido con guacamole fresco, camote asado y quesos cremosos.",
+        intro: "Bowl colorido sobre yogur: guacamole simple, camote asado, tomates con quesos y un final de feta.",
         ingredients: [
-            "Yogur natural",
-            "Sal",
-            "Pimienta",
-            "Pasta de ajo",
-            "Eneldo",
-            "Cebollín",
-            "Aguacate",
-            "Tomates",
-            "Bocconcini",
-            "Queso cottage",
-            "Especias",
-            "Camote",
-            "Ajo",
-            "Champiñones",
-            "Feta"
+            { name: "Yogur natural" },
+            { name: "Sal", note: "para el yogur y el guacamole" },
+            { name: "Pimienta", note: "para el yogur" },
+            { name: "Pasta de ajo", note: "para el yogur" },
+            { name: "Eneldo", note: "para el yogur" },
+            { name: "Cebollín", note: "para el yogur" },
+            { name: "Aguacate", note: "para el guacamole" },
+            { name: "Tomates" },
+            { name: "Bocconcini" },
+            { name: "Queso cottage" },
+            { name: "Especias" },
+            { name: "Camote", note: "en trozos, cocido o asado" },
+            { name: "Ajo" },
+            { name: "Champiñones" },
+            { name: "Feta", note: "para terminar" }
         ],
         steps: [
             "Condimenta el yogur con sal, pimienta, pasta de ajo, eneldo y cebollín.",
