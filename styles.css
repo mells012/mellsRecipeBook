@@ -615,62 +615,69 @@ tr.done { opacity: 0.55; }
 
 .m-ingredients {
     list-style: none;
-    columns: 2;
-    column-gap: 2rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 0.35rem 1.25rem;
+    align-items: start;
 }
 
 .m-ingredients li {
-    break-inside: avoid;
-    padding: 0.3rem 0 0.3rem 1.5rem;
     position: relative;
+    padding: 0.4rem 0.65rem 0.4rem 1.85rem;
     font-size: 0.97rem;
-}
-
-.m-ingredients .ing-hover {
-    text-decoration: underline dotted var(--olive) 1.5px;
-    text-underline-offset: 3px;
-    cursor: help;
-}
-
-.m-ingredients .ing-tip {
-    display: none;
-    position: absolute;
-    left: 1.2rem;
-    bottom: calc(100% + 4px);
-    z-index: 20;
-    flex-direction: column;
-    gap: 0.35rem;
-    min-width: 210px;
-    background: var(--paper);
-    border: 1.5px solid var(--olive);
     border-radius: 8px;
-    padding: 0.6rem 0.8rem;
-    box-shadow: 0 10px 24px rgba(43, 36, 22, 0.22);
-}
-
-.m-ingredients li:hover .ing-tip,
-.m-ingredients li:focus .ing-tip,
-.m-ingredients li:focus-within .ing-tip {
-    display: flex;
-}
-
-.tip-none {
-    font-family: var(--mono);
-    font-size: 0.7rem;
-    color: var(--ink-soft);
+    cursor: default;
+    transition: background 0.2s ease;
 }
 
 .m-ingredients li::before {
     content: "✓";
     position: absolute;
-    left: 0;
+    left: 0.6rem;
+    top: 0.4rem;
     color: var(--olive);
     font-weight: 700;
+}
+
+.m-ingredients li:hover,
+.m-ingredients li:focus-within {
+    background: var(--paper-soft);
 }
 
 .m-ingredients .ing-note {
     font-style: italic;
     font-size: 0.85rem;
+    color: var(--ink-soft);
+}
+
+/* Expansión inline de nutrientes (colapsa sola al salir el mouse) */
+.m-ingredients .ing-expand {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.25s ease;
+}
+
+.m-ingredients li:hover .ing-expand,
+.m-ingredients li:focus-within .ing-expand {
+    grid-template-rows: 1fr;
+}
+
+.m-ingredients .ing-expand-inner {
+    overflow: hidden;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.m-ingredients li:hover .ing-expand-inner,
+.m-ingredients li:focus-within .ing-expand-inner {
+    padding-top: 0.45rem;
+}
+
+.tip-none {
+    font-family: var(--mono);
+    font-size: 0.7rem;
     color: var(--ink-soft);
 }
 

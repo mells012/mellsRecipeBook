@@ -208,12 +208,14 @@ function openRecipe(id) {
             <ul class="m-ingredients">
                 ${r.ingredients.map((i) => {
                     const nuts = INGREDIENT_NUTRIENTS[i.name] || [];
-                    const tip = nuts.length
+                    const tags = nuts.length
                         ? nutrientGroups(nuts)
                         : `<span class="tip-none">Sin aporte registrado</span>`;
                     return `<li tabindex="0">
-                        <span class="ing-hover">${esc(i.name)}</span>${i.note ? ` <span class="ing-note">(${esc(i.note)})</span>` : ""}
-                        <span class="ing-tip" role="tooltip">${tip}</span>
+                        <span class="ing-head">
+                            <span class="ing-name">${esc(i.name)}</span>${i.note ? ` <span class="ing-note">(${esc(i.note)})</span>` : ""}
+                        </span>
+                        <span class="ing-expand"><span class="ing-expand-inner">${tags}</span></span>
                     </li>`;
                 }).join("")}
             </ul>
