@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mell's Recipe Book</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🥣</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700;9..144,900&family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- ============ HERO ============ -->
+    <header class="hero">
+        <p class="eyebrow">RECETARIO PERSONAL &nbsp;·&nbsp; MELL'S KITCHEN</p>
+        <h1 class="hero-title">Mell's Recipe Book</h1>
+        <div class="hero-emojis" aria-hidden="true">
+            <span>🥣</span><span>🥚</span><span>🥑</span><span>🍅</span><span>🧄</span><span>🍄</span><span>🧀</span><span>🌿</span>
+        </div>
+        <div class="hero-meta">
+            <span><b>Recetas:</b> <span id="meta-recipes">–</span></span>
+            <span><b>Ingredientes:</b> <span id="meta-ingredients">–</span></span>
+        </div>
+        <div class="hero-nutrients" id="hero-nutrients"></div>
+    </header>
+
+    <hr class="rule">
+
+    <!-- ============ NAV ============ -->
+    <nav class="tabs" aria-label="Secciones">
+        <button class="tab-btn active" data-tab="recipes">Recetario</button>
+        <button class="tab-btn" data-tab="shopping">Ingredientes</button>
+    </nav>
+
+    <main class="content">
+
+        <!-- ============ RECETARIO ============ -->
+        <section id="recipes-tab" class="tab-panel active">
+            <h2 class="section-title">El recetario</h2>
+            <div class="recipes-grid" id="recipes-grid"></div>
+        </section>
+
+        <!-- ============ INGREDIENTES ============ -->
+        <section id="shopping-tab" class="tab-panel">
+            <h2 class="section-title">Ingredientes</h2>
+
+            <div class="filter-bar">
+                <div class="filter-group">
+                    <span class="filter-label">MACRONUTRIENTES</span>
+                    <div class="filter-chips" id="filter-macros"></div>
+                </div>
+                <div class="filter-group">
+                    <span class="filter-label">MICRONUTRIENTES</span>
+                    <div class="filter-chips" id="filter-micros"></div>
+                </div>
+            </div>
+
+            <div class="list-toolbar">
+                <p class="progress" id="shopping-progress">–</p>
+                <button class="btn-ghost" id="clear-checked">↻ Desmarcar todo</button>
+            </div>
+
+            <div class="table-scroll">
+                <table class="shopping-table">
+                    <thead>
+                        <tr>
+                            <th class="col-check">✓</th>
+                            <th class="col-name">Ingrediente</th>
+                            <th class="col-recipes">Aparece en las recetas</th>
+                            <th class="col-macros">Macronutrientes</th>
+                            <th class="col-micros">Micronutrientes</th>
+                        </tr>
+                    </thead>
+                    <tbody id="shopping-body"></tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <p>MELL'S RECIPE BOOK &nbsp;·&nbsp; hecho con 🤎</p>
+    </footer>
+
+    <!-- ============ MODAL DE RECETA ============ -->
+    <div id="recipe-modal" class="modal" aria-hidden="true">
+        <article class="modal-card">
+            <button class="modal-close" aria-label="Cerrar">×</button>
+            <div class="modal-body" id="modal-body"></div>
+        </article>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
